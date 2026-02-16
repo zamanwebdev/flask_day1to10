@@ -1,2 +1,4 @@
-Day 3 - Form Handling + GET & POST = Ongoing.
- 
+Day 3 - Form Handling + GET & POST = Done.
+Day 4 - SQLite Database + Save Form Data = Done.
+Day 5 - Full CRUD System (Professional Structure) = Done.
+Day 6 - User Registration + Login (Authentication System) = Ongoing.
