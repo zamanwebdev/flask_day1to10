@@ -3,5 +3,5 @@ Day 4 - SQLite Database + Save Form Data = Done.
 Day 5 - Full CRUD System (Professional Structure) = Done.
 Day 6 - User Registration + Login (Authentication System) = Done.
 Day 7 – Admin Panel + User Roles (Professional Feature) = Done.
-Day 8 – Flask File Upload + Image Handling = Next
-
+Day 8 – Flask File Upload + Image Handling = Done.
+Day 9 – Flask Email Sending (SMTP) + Professional Contact System
