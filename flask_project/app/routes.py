@@ -1,8 +1,12 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import get_db_connection
+import jwt
+import datetime
 
 main = Blueprint('main', __name__)
+
+SECRET_KEY = "supersecretkey"
 
 # Register
 @main.route('/register', methods=['POST'])
@@ -27,7 +31,8 @@ def register():
 
     return jsonify({"message": "User registered successfully"}), 201
 
-# Login
+
+# Login → Generate Token
 @main.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -42,15 +47,28 @@ def login():
     conn.close()
 
     if user and check_password_hash(user['password'], password):
-        session['user'] = username
-        return jsonify({"message": "Login successful"})
+
+        token = jwt.encode({
+            'username': username,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+        }, SECRET_KEY, algorithm="HS256")
+
+        return jsonify({"token": token})
 
     return jsonify({"error": "Invalid credentials"}), 401
 
-# Protected Route
-@main.route('/dashboard')
-def dashboard():
-    if 'user' not in session:
-        return jsonify({"error": "Unauthorized"}), 401
 
-    return jsonify({"message": f"Welcome {session['user']}!"})
+# Protected Route with JWT
+@main.route('/dashboard', methods=['GET'])
+def dashboard():
+
+    token = request.headers.get('Authorization')
+
+    if not token:
+        return jsonify({"error": "Token missing"}), 401
+
+    try:
+        decoded = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        return jsonify({"message": f"Welcome {decoded['username']}!"})
+    except:
+        return jsonify({"error": "Invalid or expired token"}), 401

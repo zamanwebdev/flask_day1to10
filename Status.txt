@@ -15,3 +15,4 @@ Day 13 – SQLite Database Integration (Real Database CRUD) = Done.
 Day 14 - Professional Flask Project Structure = Done.
 7:15 PM 2026-02-19
 Day 15 – Authentication System (Database + Login) = Done.
+Day 16 – JWT Authentication (Token Based Login) = Done.
